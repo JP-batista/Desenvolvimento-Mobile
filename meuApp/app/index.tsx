@@ -97,36 +97,46 @@ export default function Index() {
       </View>
 
       <Modal visible={modalVisible} transparent={true} animationType="slide">
-        <View style={styles.modalContainer} {...panResponder.panHandlers}>
-          <Animated.View style={[styles.sidebar, { transform: [{ translateX }] }]}>            
-            {/* Barra de Pesquisa dentro do Sidebar */}
-            <View style={styles.searchContainer}>
-              <Ionicons name="search-outline" size={24} color="white" />
-              <TextInput 
-                placeholder="Buscar"
-                placeholderTextColor="#999"
-                style={styles.searchInput}
-              />
-            </View>
+        <TouchableOpacity style={styles.modalOverlay} onPress={closeSidebar}>
+          <View style={styles.modalContainer} {...panResponder.panHandlers}>
+            <Animated.View style={[styles.sidebar, { transform: [{ translateX }] }]}>
+              <Text style={styles.sidebarTitle}>Menu</Text>
 
-            <Link href="/home" asChild>
-              <TouchableOpacity style={styles.sidebarButton} onPress={closeSidebar}>
-                <Ionicons name="home-outline" size={28} color="white" />
-                <Text style={styles.sidebarButtonText}>Home</Text>
-              </TouchableOpacity>
-            </Link>
-            <Link href="/configuracoes" asChild>
-              <TouchableOpacity style={styles.sidebarButton} onPress={closeSidebar}>
-                <Ionicons name="settings-outline" size={28} color="white" />
-                <Text style={styles.sidebarButtonText}>Configurações</Text>
-              </TouchableOpacity>
-            </Link>
-            <TouchableOpacity onPress={closeSidebar} style={styles.closeButton}>
-              <Text style={styles.closeButtonText}>Fechar</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        </View>
+              {/* Barra de Pesquisa */}
+              <View style={styles.searchContainer}>
+                <Ionicons name="search-outline" size={24} color="white" />
+                <TextInput 
+                  placeholder="Buscar dentro"
+                  placeholderTextColor="#999"
+                  style={styles.searchInput}
+                />
+              </View>
+
+              {/* Links do Menu */}
+              <Link href="/home" asChild>
+                <TouchableOpacity style={styles.sidebarButton} onPress={closeSidebar}>
+                  <Ionicons name="chatbubble-outline" size={28} color="white" />
+                  <Text style={styles.sidebarButtonText}>ChatGPT</Text>
+                </TouchableOpacity>
+              </Link>
+
+              {/* Perfil na parte inferior */}
+              <Link href="/configuracoes" asChild>
+                <TouchableOpacity style={styles.profileContainer} onPress={closeSidebar}>
+                  <View style={styles.profileImageContainer}>
+                    <Ionicons name="person-circle-outline" size={50} color="white" />
+                  </View>
+                  <View>
+                    <Text style={styles.profileName}>João Silva</Text>
+                    <Text style={styles.profileEmail}>joao@email.com</Text>
+                  </View>
+                </TouchableOpacity>
+              </Link>
+            </Animated.View>
+          </View>
+        </TouchableOpacity>
       </Modal>
+
     </View>
   );
 }
@@ -254,4 +264,31 @@ const styles = StyleSheet.create({
     color: 'white',
     paddingHorizontal: 15,
   },
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#333',
+  },
+  profileImageContainer: {
+    marginRight: 10,
+  },
+  profileName: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  profileEmail: {
+    color: '#bbb',
+    fontSize: 14,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  }  
 });
